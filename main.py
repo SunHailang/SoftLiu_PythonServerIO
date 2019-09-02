@@ -2,10 +2,10 @@ import math
 import platform
 import sys
 from Utils.DataBase.MySqlManager import MySqlManager
-from SocketUtils.UDP_Manager import UDP_Manager
+from SocketUtils.UDP_ServerManager import UDP_ServerManager
+from SocketUtils.TCP_ServerManager import TCP_ServerManager
 
 import threading, time
-from socket import *
 
 print("Hello World .")
 
@@ -18,8 +18,13 @@ if __name__ == "__main__":
     count = sql.GetCount("select count(*) from student;")
     print(count)
 
-    udp = UDP_Manager()
+    # udp = UDP_ServerManager()
+    tcp = TCP_ServerManager()
 
     while True:
-        time.sleep(1)
-        print("runing...")
+        city = input()
+        if city == 'quit':
+            break
+        else:
+            print("I'd love to go to " + city.title() + "!")
+    print('end')
