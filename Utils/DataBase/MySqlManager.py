@@ -32,5 +32,10 @@ class MySqlManager (object) :
     
 
     
-
+if __name__ == "__main__":
+    sql = MySqlManager("10.192.91.40", "root", "hlsun123", "hlsun")
+    data = sql.SelectData("select * from student where isDelete=1;")
+    print(data[0], len(data))
+    count = sql.GetCount("select count(*) from student;")
+    print(count)
 
