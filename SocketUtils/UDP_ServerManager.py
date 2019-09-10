@@ -2,7 +2,7 @@
 import socket
 import threading as thread
 import time
-import MyThread
+from MyThread import MyThread
 
 class UDP_ServerManager(object):
 
@@ -16,7 +16,7 @@ class UDP_ServerManager(object):
         print('Waiting for connection...')
 
         #thread.Thread(target=self.recvData).start()
-        MyThread.MyThread(1, 'udp-thread',1).createThread(self.recvData).start()
+        MyThread(1, 'udp-thread',1).createThread(self.recvData).start()
         
 
     def recvData(self, args={}):
