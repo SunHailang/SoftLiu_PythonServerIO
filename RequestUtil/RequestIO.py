@@ -12,7 +12,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-from LeftqueryUtil import LeftqueryUtil
+from RequestUtil.LeftqueryUtil import LeftqueryUtil
 
 # don't show warning information
 urllib3.disable_warnings()

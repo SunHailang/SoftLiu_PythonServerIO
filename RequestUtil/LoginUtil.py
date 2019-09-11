@@ -15,10 +15,10 @@ import RequestIO
 
 class Login(object):
 
-    def __init__(self, reqestUtil):
+    def __init__(self, reqestUtil, username, password):
         self.reqestUtil = reqestUtil
-        self.username = input('Please input user name: ')
-        self.password = input('Please input password: ')
+        self.username = username
+        self.password = password
         self.url_pic = 'https://kyfw.12306.cn/passport/captcha/captcha-image?login_sit=E&module=login%rand=sjrand&0.15905700266966694'
         self.url_check = 'https://kyfw.12306.cn/passport/captcha/captcha-check'
         self.url_login = 'https://kyfw.12306.cn/passport/web/login'
