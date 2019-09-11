@@ -12,7 +12,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-import LeftqueryUtil.LeftqueryUtil
+from LeftqueryUtil import LeftqueryUtil
 
 # don't show warning information
 urllib3.disable_warnings()
@@ -22,5 +22,10 @@ req = requests.Session()
 if __name__ == "__main__":
     print(len(req.cookies))
 
-    # query = LeftqueryUtil()
-    # query.query('' '2019-09-10')
+    query = LeftqueryUtil(req)
+    from_station = '徐州东'
+    to_station = '上海'
+    date = '2019-09-11'
+    # info = query.query(from_station, to_station, date)
+    info = query.station_name(from_station)
+    print(info)
