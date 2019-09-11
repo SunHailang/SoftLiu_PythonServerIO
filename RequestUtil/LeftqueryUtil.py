@@ -5,7 +5,7 @@
 
 import requests
 import ssl
-import json
+import json, os
 import urllib3
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -24,9 +24,8 @@ class LeftqueryUtil(object):
             'X-Requested-With': 'XMLHttpRequest'
         }
     
-    def station_name(self, station):
+    def station_name(self):
         # get station name
-        print('station_name:', station)
         html_req = self.requestUtil.get(self.url_station, verify=False)
         print(html_req.status_code)
         html = html_req.text
@@ -37,21 +36,27 @@ class LeftqueryUtil(object):
             key = str(i.split('|')[1])
             value = str(i.split('|')[2])
             dict[key] = value
-        print(dict[station])
-        fo = open('station.json', 'w+')
-        fo.write(json.dumps(dict))
-        fo.close()
-        return dict[station]
+        # fo = open('station_name.json', 'w+')
+        # fo.write(html)
+        # fo.close()
+        return dict
     
     def query(self, form_station, to_station, date):
-        fromstation = self.station_name(form_station)
-        tostation = self.station_name(to_station)
-        url = 'https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date={}&leftTicketDTO.form_station={}&leftTicketDTO.to_station={}&purpose_code=ADULT'.format(
+        station_name = self.station_name()
+        
+        fromstation = station_name[form_station]
+        print('from station name: {} -> {}'.format(form_station, fromstation))
+        tostation = station_name[to_station]
+        print('to station name: {} -> {}'.format(to_station, tostation))
+        url = 'https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date={}&leftTicketDTO.form_station={}&leftTicketDTO.to_station={}&purpose_code=ADULT'.format(
             date, fromstation, tostation
         )
-        
+        print('url: ', url)
         try:
-            html = self.requestUtil.get(url, headers=self.headers, verify=False).json()
+            html_req = self.requestUtil.get(url, headers=self.headers, verify=False)
+            print(html_req.status_code)
+            print(html_req.text)
+            html = json.loads(html_req.content)
             result = html['data']['result']
             if result == []:
                 print('Result None.')
@@ -64,8 +69,10 @@ class LeftqueryUtil(object):
                     if info[0] != '' and info[0] != 'null':
                         print(info)
                 return result
-        except expression as identifier:
-            return ''
+        except:
+           return 'query error.'
+
+       
 
 if __name__ == "__main__":
     print('Strat Tickets')
