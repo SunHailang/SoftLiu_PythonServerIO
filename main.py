@@ -18,6 +18,9 @@ if __name__ == "__main__":
     count = sql.GetCount("select count(*) from student;")
     print(count)
 
+
+
+
     # udp = UDP_ServerManager()
     tcp = TCP_ServerManager()
     startThread = tcp.startThread()

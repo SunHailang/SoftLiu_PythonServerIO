@@ -9,6 +9,7 @@ sys.path.append(o_path)
 
 from RequestUtil.LeftqueryUtil import LeftqueryUtil
 from RequestUtil.LoginUtil import LoginUtil
+from RequestUtil.LoginUtil import LoginCheckCode
 
 from RequestUtil import RequestIO
 
@@ -24,6 +25,7 @@ class TCP_CommandUtil(object):
 
     def createRun(self):
         run = {
+            'TrainCheckCode': self.runTrainCheckCode,
             'TrainLogin': self.runTrainLogin,
             'TrainQuery': self.runTrainQuery
         }
@@ -32,6 +34,19 @@ class TCP_CommandUtil(object):
         else:
             return None
         
+    def runTrainCheckCode(self):
+        checkCode = LoginCheckCode(self.requestUtil)
+        # img = checkCode.showimg()
+        with open('pic.jpg', 'rb') as fo:
+            img = fo.read()
+        result = {
+            'code': 'TrainCheckCode',
+            'status': 0,
+            'result': img,
+            'size': len(img)
+        }
+        print(len(img))
+        return result
 
     def runTrainLogin(self):
         user_name = self.command['user_name']

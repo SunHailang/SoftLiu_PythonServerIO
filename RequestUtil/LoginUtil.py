@@ -11,15 +11,11 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-class LoginUtil(object):
-
-    def __init__(self, reqestUtil, username, password):
-        self.reqestUtil = reqestUtil
-        self.username = username
-        self.password = password
+class LoginCheckCode(object):
+    
+    def __init__(self, requestUtil):
+        self.reqestUtil = requestUtil
         self.url_pic = 'https://kyfw.12306.cn/passport/captcha/captcha-image?login_sit=E&module=login%rand=sjrand&0.15905700266966694'
-        self.url_check = 'https://kyfw.12306.cn/passport/captcha/captcha-check'
-        self.url_login = 'https://kyfw.12306.cn/passport/web/login'
         self.headers = {
                 'Host':'kyfw.12306.cn',
                 'Referer':'https://kyfw.12306.cn/otn/login/init',
@@ -35,6 +31,23 @@ class LoginUtil(object):
         plt.imshow(img)
         plt.axis('off')
         plt.show()
+        return html_pic
+
+class LoginUtil(object):
+
+    def __init__(self, reqestUtil, username, password):
+        self.reqestUtil = reqestUtil
+        self.username = username
+        self.password = password
+        
+        self.url_check = 'https://kyfw.12306.cn/passport/captcha/captcha-check'
+        self.url_login = 'https://kyfw.12306.cn/passport/web/login'
+        self.headers = {
+                'Host':'kyfw.12306.cn',
+                'Referer':'https://kyfw.12306.cn/otn/login/init',
+                'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
+                }
+
     
     def captcha(self, answer_num):
         # check code

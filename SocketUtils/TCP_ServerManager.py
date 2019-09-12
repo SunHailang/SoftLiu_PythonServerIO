@@ -3,7 +3,7 @@
     create time: 2019-09-02
 '''
 
-import socket, json
+import socket, json, struct, math
 import threading
 from MyThread import MyThread
 
@@ -65,10 +65,13 @@ class TCP_ServerManager(object):
                         commandJson = json.loads(request)
                         command = TCP_CommandUtil(commandJson)
                         resultCode = command.getResult()
-                        result_send = json.dumps(resultCode)
-                        print('sending data back to the client : ' + result_send)
-                        result = result_send.encode('utf-8')                        
-                        connection.sendall(result)
+                        if resultCode['code'] == 'TrainCheckCode':
+                            self.sendData(connection, resultCode)                            
+                        else:
+                            result_send = json.dumps(resultCode)
+                            print('sending data back to the client : ' + result_send)
+                            result = result_send.encode('utf-8')                        
+                            connection.sendall(result)
                 else:
                     print('no more data from.')
                     break
@@ -78,6 +81,12 @@ class TCP_ServerManager(object):
                 self.clientList.remove(client)
             if connection:
                 connection.close()
+
+    def sendData(self, conn, result):
+        result_header = struct.pack('i', result['size'])
+        conn.sendall(result_header)
+        data = result['result']
+        conn.sendall(data)
 
 
         
