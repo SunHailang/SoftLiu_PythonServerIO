@@ -38,7 +38,17 @@ class TCP_CommandUtil(object):
         user_password = self.command['user_password']
 
         login = LoginUtil(self.requestUtil, user_name, user_password)
-        
+        login.showimg()
+        print('  =============================================================== ')
+        print('   根据打开的图片识别验证码后手动输入，输入正确验证码对应的位置 ')
+        print('     --------------------------------------')
+        print('            1  |  2  |  3  |  4 ')
+        print('     --------------------------------------')
+        print('            5  |  6  |  7  |  8 ')
+        print('     --------------------------------------- ')
+        print(' =============================================================== ')
+        answer_num = input('Please input check code: ')
+        login.captcha(answer_num)
 
         result = {
             'status': 0,

@@ -11,9 +11,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-import RequestIO
-
-class Login(object):
+class LoginUtil(object):
 
     def __init__(self, reqestUtil, username, password):
         self.reqestUtil = reqestUtil
@@ -68,6 +66,7 @@ class Login(object):
             'login_site': 'E',
             'rand': 'sjrand'
         }
+        print(form_check)
         result = -1
         try:
             loginpost = self.reqestUtil.post(self.url_login, data=form_check, headers=self.headers)
@@ -81,6 +80,25 @@ class Login(object):
                 print('login failed.')
         finally:
             return result
+
+    def login(self):
+        form_login = {
+            'username': self.username,
+            'password': self.password,
+            'appid': 'otn'
+        }
+        result = -1
+        try:
+            loginPost = self.reqestUtil.post(self.url_login, data=form_login, headers=self.headers)
+            print('login status: ', loginPost.status_code)
+            print(loginPost.text)
+            html_login = json.loads(loginPost.text)
+            if html_login['result_code'] == 0:
+                result = 0
+        except:
+            return result
+        
+
         
 
 
