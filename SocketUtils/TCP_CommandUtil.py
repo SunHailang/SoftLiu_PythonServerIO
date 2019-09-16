@@ -39,7 +39,7 @@ class TCP_CommandUtil(object):
     def runTrainCheckCode(self):
         checkCode = LoginCheckCode(self.requestUtil)
         # img = checkCode.showimg()
-        with open('pic.jpg', 'rb') as fo:
+        with open('Resources/pic.jpg', 'rb') as fo:
             img = fo.read()
         
         base64_img = base64.b64encode(img)
