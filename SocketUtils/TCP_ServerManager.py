@@ -4,8 +4,12 @@
 '''
 
 import socket, json, struct, math
+from socket import error as SocketError
+import errno
+
 import threading
 from MyThread import MyThread
+from Utils.AppConfigUtils import *
 
 from SocketUtils.TCP_CommandUtil import TCP_CommandUtil
 
@@ -13,9 +17,10 @@ from SocketUtils.TCP_CommandUtil import TCP_CommandUtil
 class TCP_ServerManager(object):
 
     def __init__(self):
-        self.TCP_IP_ADDRESS = "192.168.218.128"
+        ip, port = getTcpConfig()
+        self.TCP_IP_ADDRESS = ip
         # self.TCP_IP_ADDRESS = "202.59.232.58"
-        self.TCP_PORT_NO = 11060
+        self.TCP_PORT_NO = port
         self.clientList = []
         # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -31,7 +36,7 @@ class TCP_ServerManager(object):
 
     def startThread(self):
         #thread.Thread(target=self.recvData).start()
-        thread1 = MyThread(1, 'udp-thread',1).createThread(self.startTCP)
+        thread1 = MyThread().createThread(self.startTCP)
         thread1.start()
         # thread2 = 
         return thread1
@@ -44,43 +49,45 @@ class TCP_ServerManager(object):
             try:
                 connection, client_address = self.sock.accept()
                 self.clientList.append(client_address)
-                MyThread(2, 'udp-thread',2).createThread(self.recvData, args={'con':connection, 'client':client_address}).start()
-            finally:
+                MyThread().createThread(self.recvData, args={'con':connection, 'client':client_address}).start()
+            except:
+                print('server closed.')
                 break
             
     def recvData(self, args={}):
         connection = args['con']
         client = args['client']
         try:    
-            print('connection from', client)        
+            print('connection from', client)
             # Receive the data in small chunks and retransmit it
             while True:
-                data = connection.recv(1024)
-                request = data.decode('utf-8')
-                print('received "%s"' % request)
-                if request:
-                    if request == 'exit':
-                        break
-                    else:
-                        commandJson = json.loads(request)
-                        command = TCP_CommandUtil(commandJson)
-                        resultCode = command.getResult()
-                        if resultCode['code'] == 'TrainCheckCode':
-                            self.sendData(connection, resultCode)                            
+                try:
+                    data = connection.recv(1024)
+                    request = data.decode('utf-8')
+                    print('received "%s"' % request)
+                    if request:
+                        if request == 'exit':
+                            break
                         else:
-                            result_send = json.dumps(resultCode)
-                            print('sending data back to the client : ' + result_send)
-                            result = result_send.encode('utf-8')                        
-                            connection.sendall(result)
-                else:
-                    print('no more data from.')
-                    break
+                            commandJson = json.loads(request)
+                            command = TCP_CommandUtil(commandJson)
+                            resultCode = command.getResult()
+                            self.sendData(connection, resultCode)
+                    else:
+                        print('no more data from.')
+                        break
+                except SocketError as e:
+                    print(e.errno)
+                    break                
+                
         finally:
             # Clean up the connection
             if self.clientList.index(client) >= 0:
                 self.clientList.remove(client)
+            print('close connection.', connection)
             if connection:
                 connection.close()
+            
 
     def sendData(self, conn, result):
         result_header = struct.pack('i', result['size'])

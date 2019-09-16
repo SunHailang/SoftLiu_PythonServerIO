@@ -1,0 +1,13 @@
+{
+    "mysql_IP":"10.192.91.40",
+    "mysql_username":"root",
+    "mysql_password":"hlsun123",
+    "mysql_database":"hlsun",
+
+    "tcp_IP":"192.168.218.128",
+    "tcp_port":11060,
+
+    "udp_IP":"",
+    "udp_port":11060
+
+}
