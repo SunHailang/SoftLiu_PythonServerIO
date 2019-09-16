@@ -32,9 +32,10 @@ def getUdpConfig():
     global app_config
     ip = app_config['udp_IP']
     port = app_config['udp_port']
-
+    return ip, port
 
 if __name__ == "__main__":
     path = 'Resources/AppConfig.json'
     initAppConfig(path)
     print(getMySqlConfig())
+    print(getUdpConfig())

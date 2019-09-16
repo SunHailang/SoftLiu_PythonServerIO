@@ -10,7 +10,7 @@ class UDP_ServerManager(object):
     
 
     def __init__(self):
-         ip, port = getUdpConfig()
+        ip, port = getUdpConfig()
         self.UDP_IP_ADDRESS = ip
         self.UDP_PORT_NO = port
         self.serverSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
