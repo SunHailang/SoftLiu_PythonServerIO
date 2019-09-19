@@ -38,4 +38,5 @@ if __name__ == "__main__":
     path = 'Resources/AppConfig.json'
     initAppConfig(path)
     print(getMySqlConfig())
+    print(getTcpConfig())
     print(getUdpConfig())
