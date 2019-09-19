@@ -33,6 +33,10 @@ class TCP_ServerManager(object):
         # Listen for incoming connections
         self.sock.listen(10)
         
+    def __del__(self):
+        print('TCP Socket Close.')
+        if self.sock:
+            self.sock.close()
 
     def startThread(self):
         #thread.Thread(target=self.recvData).start()

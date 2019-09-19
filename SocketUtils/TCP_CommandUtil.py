@@ -99,15 +99,13 @@ class TCP_CommandUtil(object):
 
         info = {
             'code': self.code,
-            'status': 0,
-            'user_name': user_name,
-            'user_password': user_password
+            'status': 0
         }
         result_info = json.dumps(info).encode('utf-8')
 
         result = {
-            'result': info,
-            'size': len(info)
+            'result': result_info,
+            'size': len(result_info)
         }
         return result
 

@@ -35,13 +35,14 @@ if __name__ == "__main__":
     # udp = UDP_ServerManager()
     tcp = TCP_ServerManager()
     startThread = tcp.startThread()
-    
+    '''
     while True:
         city = input('input: ')
         if city == 'quit':
             break
         else:
             print("I'd love to go to " + city.title() + "!")
+    '''
     startThread.join()
     
     print('end')
