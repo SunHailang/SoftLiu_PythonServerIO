@@ -4,9 +4,14 @@
 
 '''
 
+import sys
+
+import os, json
+o_path = os.getcwd()
+sys.path.append(o_path)
+
 import requests
 import ssl
-import json
 import urllib3
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -25,7 +30,7 @@ if __name__ == "__main__":
     query = LeftqueryUtil(req)
     from_station = '徐州东'
     to_station = '上海'
-    date = '2019-09-11'
+    date = '2019-09-20'
     info = query.query(from_station, to_station, date)
     # info = query.station_name(from_station)
     print(info)

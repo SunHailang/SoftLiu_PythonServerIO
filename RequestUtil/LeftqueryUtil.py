@@ -49,7 +49,7 @@ class LeftqueryUtil(object):
         tostation = station_name[to_station]
         print('to station name: {} -> {}'.format(to_station, tostation))
         # https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date=2019-09-20&leftTicketDTO.from_station=UUH&leftTicketDTO.to_station=SHH&purpose_codes=ADULT
-        url = 'https://kyfw.12306.cn/otn/leftTicket/query?leftTicketDTO.train_date={}&leftTicketDTO.form_station={}&leftTicketDTO.to_station={}&purpose_code=ADULT'.format(
+        url = 'https://kyfw.12306.cn/otn/leftTicket/queryA?leftTicketDTO.train_date={}&leftTicketDTO.from_station={}&leftTicketDTO.to_station={}&purpose_codes=ADULT'.format(
             date, fromstation, tostation
         )
         print('url: ', url)
