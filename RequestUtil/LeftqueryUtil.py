@@ -19,8 +19,9 @@ class LeftqueryUtil(object):
         self.headers = {
             'Host': 'kyfw.12306.cn',
             'If-Modified-Since': '0',
-            'Pragma': 'no-cache',
-            'Referer': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+            'Cache-Control': 'no-cache',
+            'Referer': 'ttps://kyfw.12306.cn/otn/leftTicket/init',
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:69.0) Gecko/20100101 Firefox/69.0',
             'X-Requested-With': 'XMLHttpRequest'
         }
     

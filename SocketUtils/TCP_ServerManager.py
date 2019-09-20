@@ -2,6 +2,11 @@
     author: Sun Hai Lang
     create time: 2019-09-02
 '''
+import sys
+
+import os, json
+o_path = os.getcwd()
+sys.path.append(o_path)
 
 import socket, json, struct, math
 from socket import error as SocketError
@@ -25,7 +30,7 @@ class TCP_ServerManager(object):
         # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.host = socket.gethostname()
-        print('ip:', socket.gethostbyname(self.host))
+        # print('ip:', socket.gethostbyname(self.host))
         # Bind the socket to the port
         self.server_address = (self.TCP_IP_ADDRESS, self.TCP_PORT_NO)
         print('address:',self.server_address)
@@ -69,6 +74,7 @@ class TCP_ServerManager(object):
                     data = connection.recv(1024)
                     request = data.decode('utf-8')
                     print('received "%s"' % request)
+                    '''
                     if request:
                         if request == 'exit':
                             break
@@ -80,6 +86,8 @@ class TCP_ServerManager(object):
                     else:
                         print('no more data from.')
                         break
+                    '''
+                    connection.close()
                 except SocketError as e:
                     print(e.errno)
                     break                
@@ -99,5 +107,9 @@ class TCP_ServerManager(object):
         data = result['result']
         conn.sendall(data)
 
-
+if __name__ == "__main__":
+    host = socket.gethostname()
+    print(host)
+    # ip = socket.gethostbyname(host)
+    # print(ip)
         

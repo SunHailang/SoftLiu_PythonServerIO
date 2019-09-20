@@ -37,7 +37,7 @@ class TCP_CommandUtil(object):
             return None
         
     def runTrainCheckCode(self):
-        checkCode = LoginCheckCode(self.requestUtil)
+        # checkCode = LoginCheckCode(self.requestUtil)
         # img = checkCode.showimg()
         with open('Resources/pic.jpg', 'rb') as fo:
             img = fo.read()
@@ -62,8 +62,8 @@ class TCP_CommandUtil(object):
         user_name = self.command['user_name']
         user_password = self.command['user_password']
 
-        login = LoginUtil(self.requestUtil, user_name, user_password)
-        login.showimg()
+        # login = LoginUtil(self.requestUtil, user_name, user_password)
+        # login.showimg()
         print('  =============================================================== ')
         print('   根据打开的图片识别验证码后手动输入，输入正确验证码对应的位置 ')
         print('     --------------------------------------')
@@ -72,8 +72,8 @@ class TCP_CommandUtil(object):
         print('            5  |  6  |  7  |  8 ')
         print('     --------------------------------------- ')
         print(' =============================================================== ')
-        answer_num = input('Please input check code: ')
-        login.captcha(answer_num)
+        # answer_num = input('Please input check code: ')
+        # login.captcha(answer_num)
 
         info = {
             'code': self.code,

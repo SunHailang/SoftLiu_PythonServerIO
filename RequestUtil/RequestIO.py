@@ -34,3 +34,4 @@ if __name__ == "__main__":
     info = query.query(from_station, to_station, date)
     # info = query.station_name(from_station)
     print(info)
+    print(req.cookies)

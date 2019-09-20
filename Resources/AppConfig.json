@@ -4,7 +4,7 @@
     "mysql_password":"hlsun123",
     "mysql_database":"hlsun",
 
-    "tcp_IP":"192.168.218.128",
+    "tcp_IP":"10.192.129.64",
     "tcp_port":11060,
 
     "udp_IP":"127.0.0.1",
