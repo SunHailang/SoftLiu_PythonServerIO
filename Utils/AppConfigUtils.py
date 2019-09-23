@@ -24,9 +24,10 @@ def getMySqlConfig():
 
 def getTcpConfig():
     global app_config
+    host = app_config['tcp_host']
     ip = app_config['tcp_IP']
     port = app_config['tcp_port']
-    return ip, port
+    return host, ip, port
 
 def getUdpConfig():
     global app_config

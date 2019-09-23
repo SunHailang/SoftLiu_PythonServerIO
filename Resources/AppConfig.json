@@ -4,6 +4,7 @@
     "mysql_password":"hlsun123",
     "mysql_database":"hlsun",
 
+    "tcp_host":"https://79864185.ngrok.io",
     "tcp_IP":"10.192.129.64",
     "tcp_port":11060,
 

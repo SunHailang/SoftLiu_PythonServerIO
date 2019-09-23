@@ -22,14 +22,14 @@ from SocketUtils.TCP_CommandUtil import TCP_CommandUtil
 class TCP_ServerManager(object):
 
     def __init__(self):
-        ip, port = getTcpConfig()
-        self.TCP_IP_ADDRESS = ip
+        host, ip, port = getTcpConfig()
+        self.TCP_IP_ADDRESS = socket.gethostbyname(host)
         # self.TCP_IP_ADDRESS = "202.59.232.58"
         self.TCP_PORT_NO = port
         self.clientList = []
         # Create a TCP/IP socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.host = socket.gethostname()
+        # self.host = socket.gethostname()
         # print('ip:', socket.gethostbyname(self.host))
         # Bind the socket to the port
         self.server_address = (self.TCP_IP_ADDRESS, self.TCP_PORT_NO)
@@ -108,8 +108,9 @@ class TCP_ServerManager(object):
         conn.sendall(data)
 
 if __name__ == "__main__":
-    host = socket.gethostname()
-    print(host)
+    host = 'https://79864185.ngrok.io'
     # ip = socket.gethostbyname(host)
-    # print(ip)
+    # print(host)
+    ip = socket.gethostbyname(host)
+    print('host : {} , ip : {}'.format(host,ip))
         
