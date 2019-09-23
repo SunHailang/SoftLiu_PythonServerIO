@@ -23,7 +23,8 @@ class TCP_ServerManager(object):
 
     def __init__(self):
         host, ip, port = getTcpConfig()
-        self.TCP_IP_ADDRESS = socket.gethostbyname(host)
+        self.platform = getPlatform()
+        self.TCP_IP_ADDRESS = ip
         # self.TCP_IP_ADDRESS = "202.59.232.58"
         self.TCP_PORT_NO = port
         self.clientList = []
@@ -68,30 +69,45 @@ class TCP_ServerManager(object):
         client = args['client']
         try:    
             print('connection from', client)
+            recv_buffer = 1024
+            recv_size = 0
+            recevied_data = b''  #客户端每次发来内容的计数器
             # Receive the data in small chunks and retransmit it
             while True:
                 try:
-                    data = connection.recv(1024)
-                    request = data.decode('utf-8')
-                    print('received "%s"' % request)
-                    '''
-                    if request:
-                        if request == 'exit':
-                            break
-                        else:
-                            commandJson = json.loads(request)
-                            command = TCP_CommandUtil(commandJson)
-                            resultCode = command.getResult()
-                            self.sendData(connection, resultCode)
-                    else:
-                        print('no more data from.')
-                        break
-                    '''
-                    connection.close()
+                    data = connection.recv(recv_buffer)
+                    recvLen, = struct.unpack('i', data)
+                    print('recv data length: {}'.format(recvLen))
+                    
+                    while True:
+                        data = connection.recv(recv_buffer)
+                        recv_size = recv_size + len(data)
+                        recevied_data += data
+                        if recv_size >= recvLen:
+                            # deal with 
+                            request = recevied_data.decode('utf-8')
+                            print(request)
+                            try:
+                                if self.platform == 'Linux_Ubuntu':
+                                    pass
+                                elif self.platform == 'Windows':
+                                    pass
+                                elif self.platform = 'iMac':
+                                    if request:
+                                        commandJson = json.loads(request)
+                                        command = TCP_CommandUtil(commandJson)
+                                        resultCode = command.getResult()
+                                        self.sendData(connection, resultCode)
+                                    else:
+                                        print('no more data from.')
+                                        break
+                            finally:
+                                recevied_data = b''
+                                recv_size = 0
+                                break
                 except SocketError as e:
                     print(e.errno)
                     break                
-                
         finally:
             # Clean up the connection
             if self.clientList.index(client) >= 0:

@@ -13,6 +13,11 @@ def initAppConfig(path):
         global app_config
         app_config = json.load(js)
 
+def getPlatform():
+    global app_config
+    platform = app_config['platform']
+    return platform
+
 def getMySqlConfig():
     global app_config
     ip = app_config['mysql_IP']
