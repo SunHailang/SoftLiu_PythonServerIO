@@ -30,8 +30,9 @@ class TCP_ClientManager(object):
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.server_address = (self.TCP_IP_ADDRESS, self.TCP_PORT_NO)
             self.sock.connect(self.server_address)
-        except error:
+        except SocketError as e:
             self.sock = None
+            print(e.errno)
         
         
 
@@ -69,12 +70,13 @@ class TCP_ClientManager(object):
                                 recv_size = 0
                                 recevied_data = b''
                                 break
-                        except error:
+                        except SocketError as e:
                             recv_size = 0
                             recevied_data = b''
+                            print(e.errno)
                             break                        
-                except error:
-                    print(error)
+                except SocketError as e:
+                    print(e.errno)
                     break
         finally:
             if self.sock:
