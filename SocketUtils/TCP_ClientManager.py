@@ -24,26 +24,55 @@ class TCP_ClientManager(object):
     def __init__(self):
         self.platform = getPlatform()
         host, ip, port = getTcpConfig()
-        self.TCP_IP_ADDRESS = socket.gethostbyname(host)
-        self.TCP_PORT_NO = port
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server_address = (self.TCP_IP_ADDRESS, self.TCP_PORT_NO)
-        self.sock.connect(self.server_address)
+        try:
+            self.TCP_IP_ADDRESS = socket.gethostbyname(host)
+            self.TCP_PORT_NO = port
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.server_address = (self.TCP_IP_ADDRESS, self.TCP_PORT_NO)
+            self.sock.connect(self.server_address)
+        except error:
+            self.sock = None
+        
         
 
     def startThread(self):
-        #thread.Thread(target=self.recvData).start()
-        thread1 = MyThread().createThread(self.recvTCP)
-        thread1.start()
-        # thread2 = 
-        return thread1
+        if self.sock:
+            #thread.Thread(target=self.recvData).start()
+            thread1 = MyThread().createThread(self.recvData)
+            thread1.start()
+            return thread1, self.sock
+        else:
+            return None, None
+        
     
     def recvData(self, args={}):
         try:
+            recv_buffer = 1024
+            recv_size = 0
+            recevied_data = b''  #客户端每次发来内容的计数器
             while True:
                 try:
-                    cacheBuff = None
-                    datasize = bytes[1024]
+                    data = connection.recv(recv_buffer)
+                    recvLen, = struct.unpack('i', data)
+                    print('recv data length: {}'.format(recvLen))
+                    
+                    while True:
+                        try:
+                            data = connection.recv(recv_buffer)
+                            recv_size = recv_size + len(data)
+                            recevied_data += data
+                            if recv_size >= recvLen:
+                                # deal with 
+                                request = recevied_data.decode('utf-8')
+                                print(request)
+
+                                recv_size = 0
+                                recevied_data = b''
+                                break
+                        except error:
+                            recv_size = 0
+                            recevied_data = b''
+                            break                        
                 except error:
                     print(error)
                     break

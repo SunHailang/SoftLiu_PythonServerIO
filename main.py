@@ -9,6 +9,7 @@ sys.path.append(o_path)
 from Utils.DataBase.MySqlManager import MySqlManager
 from SocketUtils.UDP_ServerManager import UDP_ServerManager
 from SocketUtils.TCP_ServerManager import TCP_ServerManager
+from SocketUtils.TCP_ClientManager import TCP_ClientManager
 from Utils.AppConfigUtils import *
 
 import threading, time
@@ -30,10 +31,19 @@ if __name__ == "__main__":
         count = sql.GetCount("select count(*) from student;")
         print(count)
 
+        # start client connection server
+        client, clientSock = TCP_ClientManager()
+        if clientSock:
+            clientThreat = client.startThread()
+        else:
+            return
+        # start server
         tcp = TCP_ServerManager()
-        startThread = tcp.startThread()
-        startThread.join()
+        serverThread = tcp.startThread()
         
+
+        serverThread.join()
+
     elif platform == 'Windows':
         pass
     elif platform == 'iMac':
