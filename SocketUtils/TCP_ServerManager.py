@@ -108,9 +108,9 @@ class TCP_ServerManager(object):
         conn.sendall(data)
 
 if __name__ == "__main__":
-    host = 'https://79864185.ngrok.io'
+    hostname = '79864185.ngrok.io'
     # ip = socket.gethostbyname(host)
     # print(host)
-    ip = socket.gethostbyname(host)
-    print('host : {} , ip : {}'.format(host,ip))
-        
+    ipname = socket.gethostbyname(hostname)
+    print('host : {} , ip : {}'.format(hostname, ipname))
+    
