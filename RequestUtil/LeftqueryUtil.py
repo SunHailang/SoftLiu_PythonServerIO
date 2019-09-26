@@ -115,10 +115,13 @@ class LeftqueryUtil(object):
 def querayThread(args={}):
     queray = args["queray"]
     while True:
-        info = queray.query(from_station, to_station, date)
-        # print(info)
-        print(datetime.datetime.now())
-        time.sleep(5)
+        try:
+            info = queray.query(from_station, to_station, date)
+            # print(info)
+            print(datetime.datetime.now())
+            time.sleep(5)
+        except :
+            pass
     os.system('say "end"')
 
 
