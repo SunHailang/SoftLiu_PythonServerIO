@@ -32,17 +32,14 @@ if __name__ == "__main__":
         print(count)
 
         # start client connection server
-        client, clientSock = TCP_ClientManager()
+        client = TCP_ClientManager()
+        clientThreat, clientSock = client.startThread()
         if clientSock:
-            clientThreat = client.startThread()
-        else:
-            return
-        # start server
-        tcp = TCP_ServerManager()
-        serverThread = tcp.startThread()
-        
-
-        serverThread.join()
+            
+            # start server
+            tcp = TCP_ServerManager()
+            serverThread = tcp.startThread()
+            serverThread.join()
 
     elif platform == 'Windows':
         pass

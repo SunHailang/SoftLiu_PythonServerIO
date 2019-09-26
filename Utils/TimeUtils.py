@@ -12,6 +12,8 @@ import datetime
 
 import calendar
 
+import operator
+
 import os
 
 
@@ -80,3 +82,7 @@ if __name__ == "__main__":
     print('******************************************')
     print(time.localtime(time.time()).tm_yday)
     print(getYearOfDay(datetime.datetime.now()))
+
+    print(operator.eq('12:00', '11:00'))
+    print(operator.eq('12:00', '12:00'))
+    print(operator.eq('11:00', '12:00'))

@@ -2,9 +2,8 @@
     author: Sun Hai Lang
     create time: 2019-09-02
 '''
-import sys
 
-import os, json
+import sys, os, json
 o_path = os.getcwd()
 sys.path.append(o_path)
 
@@ -23,8 +22,12 @@ class TCP_ServerManager(object):
 
     def __init__(self):
         host, ip, port = getTcpConfig()
+        print('host: {}, ip: {}, port: {}'.format(host, ip, port))
         self.platform = getPlatform()
-        self.TCP_IP_ADDRESS = ip
+        if self.platform == 'iMac':
+            self.TCP_IP_ADDRESS = socket.gethostbyname(host)
+        else:
+            self.TCP_IP_ADDRESS = ip
         # self.TCP_IP_ADDRESS = "202.59.232.58"
         self.TCP_PORT_NO = port
         self.clientList = []
@@ -92,7 +95,7 @@ class TCP_ServerManager(object):
                                     pass
                                 elif self.platform == 'Windows':
                                     pass
-                                elif self.platform = 'iMac':
+                                elif self.platform == 'iMac':
                                     if request:
                                         commandJson = json.loads(request)
                                         command = TCP_CommandUtil(commandJson)

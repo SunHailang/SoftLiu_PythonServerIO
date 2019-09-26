@@ -30,7 +30,7 @@ if __name__ == "__main__":
     query = LeftqueryUtil(req)
     from_station = '徐州东'
     to_station = '上海'
-    date = '2019-09-20'
+    date = '2019-09-24'
     info = query.query(from_station, to_station, date)
     # info = query.station_name(from_station)
     print(info)
